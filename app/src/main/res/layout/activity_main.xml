@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".MainActivity">
+    <!--https://github.com/mancj/MaterialSearchBar-->
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        android:id="@+id/searchBar"
+        style="@style/MaterialSearchBarLight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:mt_placeholder="Welcome to Skim"
+        app:mt_placeholderColor="@color/colorPrimaryDark1"
+        app:mt_hint="Search for topics to skim"
+        app:mt_maxSuggestionsCount="0"
+        app:mt_roundedSearchBarEnabled="true"
+        app:mt_searchBarColor="@color/colorPrimaryLight"
+        app:mt_textColor="@color/colorPrimaryDark1"
+        app:mt_backIconTint="@color/colorPrimaryDark2"
+        app:mt_clearIconTint="@color/colorPrimaryDark2"
+        app:mt_searchIconTint="@color/colorPrimaryDark2"
+        app:mt_speechMode="false" />
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="288dp"
+        android:text="@string/title_back"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/windowBackground"
+        android:backgroundTint="@color/colorPrimaryLight"
+        app:itemIconTint="@color/colorPrimaryDark2"
+        app:itemTextColor="@color/colorPrimaryDark2"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation" />
+
+</android.support.constraint.ConstraintLayout>

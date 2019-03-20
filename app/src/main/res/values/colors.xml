@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#5CDB95</color>
+    <color name="colorPrimaryDark1">#379683</color>
+    <color name="colorPrimaryDark2">#00574B</color>
+    <color name="colorPrimaryLight">#EDF5E1</color>
+    <color name="notifBarColor">#5CDB95</color>
+</resources>
