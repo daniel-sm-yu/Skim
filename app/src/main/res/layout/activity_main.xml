@@ -7,39 +7,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     tools:context=".MainActivity">
-    <!--https://github.com/mancj/MaterialSearchBar-->
-    <com.mancj.materialsearchbar.MaterialSearchBar
-        android:id="@+id/searchBar"
-        style="@style/MaterialSearchBarLight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:mt_placeholder="Welcome to Skim"
-        app:mt_placeholderColor="@color/colorPrimaryDark1"
-        app:mt_hint="Search for topics to skim"
-        app:mt_maxSuggestionsCount="0"
-        app:mt_roundedSearchBarEnabled="true"
-        app:mt_searchBarColor="@color/colorPrimaryLight"
-        app:mt_textColor="@color/colorPrimaryDark1"
-        app:mt_backIconTint="@color/colorPrimaryDark2"
-        app:mt_clearIconTint="@color/colorPrimaryDark2"
-        app:mt_searchIconTint="@color/colorPrimaryDark2"
-        app:mt_speechMode="false" />
-
-    <TextView
-        android:id="@+id/message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="52dp"
-        android:layout_marginTop="288dp"
-        android:text="@string/title_back"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
@@ -54,5 +21,119 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/navigation" />
+
+    <ScrollView
+        android:id="@+id/articleScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdgeLength="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="serif"
+                android:text="Chelsea transfer ban: Fifa denies request to freeze punishment during appeal process"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorPrimaryDark2"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/articleScrollView" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/sourceTextView"
+                    android:layout_width="156dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:text="BBC News"
+                    android:textColor="@color/colorPrimaryDark1"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/dateTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:fontFamily="serif"
+                    android:text="28-DEC-2019"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorPrimaryDark1"
+                    android:textStyle="italic" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/articleImageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="8dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitStart"
+                android:src="@drawable/temp_article_img" />
+
+            <TextView
+                android:id="@+id/descriptionTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="serif"
+                android:justificationMode="inter_word"
+                android:text="Gone are the days when you used to stack up all your video games, box to box, in a corner of your room. It's kind of sad really, because a healthy line-up of games was actually a pretty impressive sight. It's all about download codes nowadays, and even though…Gone are the days when you used to stack up all your video games, box to box, in a corner of your room. It's kind of sad really, because a healthy line-up of games was actually a pretty impressive sight. It's all about download codes nowadays, and even though…"
+                android:textColor="@color/colorPrimaryDark2"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="137dp"
+                tools:layout_editor_absoluteY="447dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!--https://github.com/mancj/MaterialSearchBar-->
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        android:id="@+id/searchBar"
+        style="@style/MaterialSearchBarLight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:mt_backIconTint="@color/colorPrimaryDark2"
+        app:mt_clearIconTint="@color/colorPrimaryDark2"
+        app:mt_maxSuggestionsCount="0"
+        app:mt_placeholder="\tSearch"
+        app:mt_placeholderColor="@color/colorPrimaryDark1"
+        app:mt_hint="Search for a topic"
+        app:mt_roundedSearchBarEnabled="true"
+        app:mt_searchBarColor="@color/colorPrimaryLight"
+        app:mt_searchIconTint="@color/colorPrimaryDark2"
+        app:mt_speechMode="false"
+        app:mt_textColor="@color/colorPrimaryDark1" />
 
 </android.support.constraint.ConstraintLayout>
