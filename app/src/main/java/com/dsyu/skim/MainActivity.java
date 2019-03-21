@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -25,7 +31,12 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
-    private AllArticles allArticles = new AllArticles();
+    public AllArticles allArticles = new AllArticles();
+    public TextView titleTextView;
+    public TextView sourceTextView;
+    public TextView dateTextView;
+    public ImageView articleImageView;
+    public TextView descriptionTextView;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -84,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
 
                         setAllArticles(jsonData);
-//                        displayCurrentArticle();
+                        displayArticle(allArticles.getCurrentArticle());
 
                     }
                 } catch (JSONException e) {
@@ -115,5 +126,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void displayArticle(final Article article) {
+        runOnUiThread( new Runnable() {
+            @Override
+            public void run() {
+                titleTextView = findViewById( R.id.titleTextView );
+                sourceTextView = findViewById( R.id.sourceTextView );
+                dateTextView = findViewById( R.id.dateTextView );
+                articleImageView = findViewById( R.id.articleImageView);
+                descriptionTextView = findViewById( R.id.descriptionTextView );
+
+                titleTextView.setText( article.getTitle() );
+                sourceTextView.setText( article.getSource() );
+                dateTextView.setText( article.getDate() );
+
+                //        articleImageView.setImage();
+                descriptionTextView.setText( article.getDescription());
+            }
+        } );
+
+    }
 
 }

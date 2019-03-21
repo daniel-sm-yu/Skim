@@ -2,7 +2,7 @@ package com.dsyu.skim;
 
 public class AllArticles {
     private int numOfArticles = 20;
-    private int currentArticleNum = 0;
+    private int currentArticleNum = 19;
     private Article[] allArticles = new Article[numOfArticles];
 
     public void setNumOfArticles(int results) {
@@ -17,10 +17,6 @@ public class AllArticles {
 
     public int getNumOfArticles() {
         return numOfArticles;
-    }
-
-    public int getCurrentArticleNum() {
-        return currentArticleNum;
     }
 
     public Article getCurrentArticle() {
