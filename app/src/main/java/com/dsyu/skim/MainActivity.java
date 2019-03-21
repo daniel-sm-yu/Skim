@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -23,7 +24,7 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
-
+    private AllArticles allArticles;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -78,17 +79,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 try {
+                    String jsonData = response.body().string();
                     if (response.isSuccessful()) {
-                        Log.e( TAG, response.body().string() );
+
+                        setAllArticles(jsonData);
+//                        displayCurrentArticle();
+
                     }
-                } catch (IOException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         } );
-
-
-
     }
+
+    private void setAllArticles(String jsonData) throws JSONException {
+        JSONObject everyArticle = new JSONObject( jsonData );
+    }
+
 
 }
