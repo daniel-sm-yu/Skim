@@ -1,13 +1,13 @@
 package com.dsyu.skim;
 
 public class AllArticles {
-    private int numOfArticles = 30;
-    private int currentArticle = 0;
+    private int numOfArticles = 20;
+    private int currentArticleNum = 0;
     private Article[] allArticles = new Article[numOfArticles];
 
-    public void setNumOfArticles(int responses) {
-        if (responses < numOfArticles) {
-            numOfArticles = responses;
+    public void setNumOfArticles(int results) {
+        if (results < numOfArticles) {
+            numOfArticles = results;
         }
     }
 
@@ -15,28 +15,36 @@ public class AllArticles {
         allArticles[i] = article;
     }
 
+    public int getNumOfArticles() {
+        return numOfArticles;
+    }
+
+    public int getCurrentArticleNum() {
+        return currentArticleNum;
+    }
+
     public Article getCurrentArticle() {
-        return allArticles[currentArticle];
+        return allArticles[currentArticleNum];
     }
 
     public Article getNextArticle() {
-        if (currentArticle == numOfArticles - 1) {
-            currentArticle = 0;
+        if (currentArticleNum == numOfArticles - 1) {
+            currentArticleNum = 0;
         }
         else {
-            currentArticle++;
+            currentArticleNum++;
         }
-        return allArticles[currentArticle];
+        return allArticles[currentArticleNum];
     }
 
     public Article getPreviousArticle() {
-        if (currentArticle == 0) {
-            currentArticle = numOfArticles - 1;
+        if (currentArticleNum == 0) {
+            currentArticleNum = numOfArticles - 1;
         }
         else {
-            currentArticle--;
+            currentArticleNum--;
         }
-        return allArticles[currentArticle];
+        return allArticles[currentArticleNum];
     }
 
 }

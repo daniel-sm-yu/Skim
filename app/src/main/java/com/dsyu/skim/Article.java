@@ -6,13 +6,13 @@ import java.util.Date;
 public class Article {
     private String title;
     private String source;
-    private Date date;
-    private URL image;
+    private String date;
+    private String image;
     private String description;
-    private URL link;
+    private String link;
 
 
-    public Article(String title, String source, Date date, URL image, String description, URL link) {
+    public Article(String title, String source, String date, String image, String description, String link) {
         this.title = title;
         this.source = source;
         this.date = date;
@@ -29,11 +29,11 @@ public class Article {
         return source;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public URL getImage() {
+    public String getImage() {
         return image;
     }
 
@@ -41,7 +41,7 @@ public class Article {
         return description;
     }
 
-    public URL getLink() {
+    public String getLink() {
         return link;
     }
 }

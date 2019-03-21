@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,7 +25,7 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
-    private AllArticles allArticles;
+    private AllArticles allArticles = new AllArticles();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -55,14 +56,14 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById( R.id.navigation );
         navigation.setOnNavigationItemSelectedListener( mOnNavigationItemSelectedListener );
 
-        getNews( "fifa" );
+        getNews( "raptors" );
     }
 
     private void getNews(String topic) {
 
         String apiKEY = BuildConfig.skim_key;
 
-        String newsURL = "https://newsapi.org/v2/everything?apiKey=" + apiKEY + "&q=" + topic;
+        String newsURL = "https://newsapi.org/v2/everything?sortBy=popularity&language=en&apiKey=" + apiKEY + "&q=" + topic;
 
         OkHttpClient client = new OkHttpClient();
 
@@ -94,7 +95,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setAllArticles(String jsonData) throws JSONException {
-        JSONObject everyArticle = new JSONObject( jsonData );
+        JSONObject jsonResponse = new JSONObject( jsonData );
+        JSONArray articles = jsonResponse.getJSONArray( "articles" );
+        int numOfResponses = jsonResponse.getInt( "totalResults" );
+
+        allArticles.setNumOfArticles( numOfResponses );
+
+        for (int i = 0; i < allArticles.getNumOfArticles(); i++) {
+            JSONObject currentArticle = articles.getJSONObject( i );
+            Article article = new Article(
+                currentArticle.getString( "title" ),
+                currentArticle.getJSONObject( "source" ).getString( "name" ),
+                currentArticle.getString( "publishedAt" ),
+                currentArticle.getString( "urlToImage" ),
+                currentArticle.getString( "description" ),
+                currentArticle.getString( "url" )
+            );
+            allArticles.setArticleAtIndex( i, article );
+        }
     }
 
 
