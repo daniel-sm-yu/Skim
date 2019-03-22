@@ -6,10 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -28,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
     public AllArticles allArticles = new AllArticles();
+    private MaterialSearchBar searchBar;
     public TextView titleTextView;
     public TextView sourceTextView;
     public TextView dateTextView;
@@ -62,18 +67,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
 
-
-        BottomNavigationView navigation = (BottomNavigationView) findViewById( R.id.navigation );
+        BottomNavigationView navigation = findViewById( R.id.navigation );
         navigation.setOnNavigationItemSelectedListener( mOnNavigationItemSelectedListener );
+        searchBar = findViewById(R.id.searchBar);
 
-        getNews( "raptors" );
+        searchBar.setOnSearchActionListener( new MaterialSearchBar.OnSearchActionListener() {
+            @Override
+            public void onSearchStateChanged(boolean enabled) { }
+
+            @Override
+            public void onSearchConfirmed(CharSequence text) {
+                getNews( String.valueOf( text ) );
+            }
+
+            @Override
+            public void onButtonClicked(int buttonCode) { }
+        } );
     }
 
     private void getNews(String topic) {
 
         String apiKEY = BuildConfig.skim_key;
 
-        String newsURL = "https://newsapi.org/v2/everything?sortBy=popularity&language=en&apiKey=" + apiKEY + "&q=" + topic;
+        String newsURL = "https://newsapi.org/v2/top-headlines?language=en&apiKey=" + apiKEY + "&q=" + topic;
 
         OkHttpClient client = new OkHttpClient();
 
@@ -83,9 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         call.enqueue( new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
+            public void onFailure(Call call, IOException e) {}
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
@@ -94,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
 
                         setAllArticles(jsonData);
-                        displayArticle(allArticles.getCurrentArticle());
 
                     }
                 } catch (JSONException e) {
@@ -108,6 +121,16 @@ public class MainActivity extends AppCompatActivity {
         JSONObject jsonResponse = new JSONObject( jsonData );
         JSONArray articles = jsonResponse.getJSONArray( "articles" );
         int numOfResponses = jsonResponse.getInt( "totalResults" );
+
+        if (numOfResponses == 0) {
+            runOnUiThread( new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText( MainActivity.this, "No results found.", Toast.LENGTH_LONG ).show();
+                }
+            } );
+            return;
+        }
 
         allArticles.setNumOfArticles( numOfResponses );
 
@@ -123,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
             );
             allArticles.setArticleAtIndex( i, article );
         }
+        displayArticle(allArticles.getCurrentArticle());
     }
 
     private void displayArticle(final Article article) {
