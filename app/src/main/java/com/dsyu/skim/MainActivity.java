@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_back:
                     displayArticle( allArticles.getPreviousArticle() );
-                    Log.e(TAG, String.valueOf( allArticles.currentArticleNum ) );
                     return true;
 
                 case R.id.navigation_read:
@@ -58,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.navigation_next:
                     displayArticle( allArticles.getNextArticle() );
-                    Log.e(TAG, String.valueOf( allArticles.currentArticleNum ) );
                     return true;
             }
             return false;
@@ -146,15 +144,11 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < allArticles.getNumOfArticles(); i++) {
             JSONObject currentArticle = articles.getJSONObject( i );
 
-            String imageURL = currentArticle.getString( "urlToImage" );
-            if (currentArticle.getString( "urlToImage" ).isEmpty()) {
-                imageURL = null;
-            }
             Article article = new Article(
                 currentArticle.getString( "title" ),
                 currentArticle.getJSONObject( "source" ).getString( "name" ),
                 currentArticle.getString( "publishedAt" ),
-                imageURL,
+                currentArticle.getString( "urlToImage" ),
                 currentArticle.getString( "description" ),
                 currentArticle.getString( "url" )
             );
