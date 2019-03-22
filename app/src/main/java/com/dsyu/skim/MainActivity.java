@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener( mOnNavigationItemSelectedListener );
         MaterialSearchBar searchBar = findViewById( R.id.searchBar );
 
-        getNews( "" );
+        getNews( "tech" );
 
         searchBar.setOnSearchActionListener( new MaterialSearchBar.OnSearchActionListener() {
             @Override
@@ -93,13 +93,15 @@ public class MainActivity extends AppCompatActivity {
     private void getNews(String topic) {
 
         String apiKEY = BuildConfig.skim_key;
-        String newsURL = "https://newsapi.org/v2/top-headlines?language=en&apiKey=" + apiKEY + "&q=";
+        String newsURL = "https://newsapi.org/v2/everything?language=en&apiKey=" + apiKEY + "&q=";
 
         StringTokenizer topics = new StringTokenizer(topic);
         while (topics.hasMoreTokens()) {
             newsURL += topics.nextToken() + "+";
         }
+
         Log.e(TAG, newsURL );
+
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(newsURL).build();
         Call call = client.newCall( request );
@@ -113,9 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     String jsonData = response.body().string();
                     if (response.isSuccessful()) {
-
                         setAllArticles(jsonData);
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
