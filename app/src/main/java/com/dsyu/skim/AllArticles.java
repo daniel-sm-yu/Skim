@@ -2,7 +2,7 @@ package com.dsyu.skim;
 
 public class AllArticles {
     private int numOfArticles = 20;
-    private int currentArticleNum = 19;
+    private int currentArticleNum = 0;
     private Article[] allArticles = new Article[numOfArticles];
 
     public void setNumOfArticles(int results) {

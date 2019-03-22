@@ -1,26 +1,22 @@
 package com.dsyu.skim;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -48,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
                     return true;
                 case R.id.navigation_read:
-
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(allArticles.getCurrentArticle().getLink()));
+                    startActivity(browserIntent);
                     return true;
                 case R.id.navigation_next:
 
@@ -139,8 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 titleTextView.setText( article.getTitle() );
                 sourceTextView.setText( article.getSource() );
                 dateTextView.setText( article.getDate() );
-
-                //        articleImageView.setImage();
+                Picasso.with(getApplicationContext()).load(article.getImage()).into(articleImageView);
                 descriptionTextView.setText( article.getDescription());
             }
         } );
