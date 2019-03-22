@@ -46,9 +46,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
                 android:fontFamily="serif"
-                android:text="Raptors still fighting injury bug as playoffs draw near"
                 android:textAlignment="viewStart"
                 android:textColor="@color/colorPrimaryDark2"
                 android:textSize="28sp"
@@ -68,19 +67,17 @@
                     android:layout_width="156dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="serif"
-                    android:text="BBC News"
                     android:textColor="@color/colorPrimaryDark1"
                     android:textSize="16sp"
                     android:textStyle="italic" />
 
                 <TextView
                     android:id="@+id/dateTextView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:fontFamily="serif"
-                    android:text="28-DEC-2019"
                     android:textAlignment="textEnd"
                     android:textColor="@color/colorPrimaryDark1"
                     android:textSize="16sp"
@@ -91,25 +88,24 @@
                 android:id="@+id/articleImageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="8dp"
+                android:paddingTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:paddingBottom="16dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitStart"
-                android:src="@drawable/temp_article_img" />
+                android:scaleType="fitStart" />
 
             <TextView
                 android:id="@+id/descriptionTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
                 android:fontFamily="sans-serif-light"
                 android:justificationMode="inter_word"
-                android:text="Gone are the days when you used to stack up all your video games, box to box, in a corner of your room. It's kind of sad really, because a healthy line-up of games was actually a pretty impressive sight. It's all about download codes nowadays, and even though…Gone are the days when you used to stack up all your video games, box to box, in a corner of your room. It's kind of sad really, because a healthy line-up of games was actually a pretty impressive sight. It's all about download codes nowadays, and even though…It's all about download codes nowadays, and even though…"
                 android:textColor="@color/colorPrimaryDark2"
                 android:textSize="19sp"
                 tools:layout_editor_absoluteX="137dp"
-                tools:layout_editor_absoluteY="447dp" />
+                tools:layout_editor_absoluteY="447dp"
+                tools:targetApi="o" />
 
         </LinearLayout>
     </ScrollView>

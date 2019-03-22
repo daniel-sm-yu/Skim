@@ -41,14 +41,16 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_back:
-
+                    displayArticle( allArticles.getPreviousArticle() );
                     return true;
+
                 case R.id.navigation_read:
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(allArticles.getCurrentArticle().getLink()));
                     startActivity(browserIntent);
                     return true;
-                case R.id.navigation_next:
 
+                case R.id.navigation_next:
+                    displayArticle( allArticles.getNextArticle() );
                     return true;
             }
             return false;
