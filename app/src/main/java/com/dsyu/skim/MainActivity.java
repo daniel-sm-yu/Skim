@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 import okhttp3.Call;
@@ -80,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener( mOnNavigationItemSelectedListener );
         MaterialSearchBar searchBar = findViewById( R.id.searchBar );
 
-        getNews( "tech" );
+        Random random = new Random();
+        getNews( String.valueOf(random.nextInt(26) + 'a') );
 
         searchBar.setOnSearchActionListener( new MaterialSearchBar.OnSearchActionListener() {
             @Override
@@ -144,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
             runOnUiThread( new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText( MainActivity.this, "No results found.", Toast.LENGTH_LONG ).show();
+                    Toast.makeText( MainActivity.this, "No results found.", Toast.LENGTH_SHORT ).show();
                 }
             } );
             return;
