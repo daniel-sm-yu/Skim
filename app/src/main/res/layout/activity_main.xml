@@ -28,13 +28,12 @@
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="16dp"
-        android:fadingEdgeLength="30dp"
         android:requiresFadingEdge="vertical"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchBar">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,7 +44,7 @@
                 android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="75dp"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="serif"
                 android:textAlignment="viewStart"
@@ -88,10 +87,10 @@
                 android:id="@+id/articleImageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:paddingBottom="16dp"
                 android:adjustViewBounds="true"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:scaleType="fitStart" />
 
             <TextView
@@ -124,10 +123,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:mt_backIconTint="@color/colorPrimaryDark2"
         app:mt_clearIconTint="@color/colorPrimaryDark2"
+        app:mt_hint="Search for a topic"
         app:mt_maxSuggestionsCount="0"
         app:mt_placeholder="\tSearch"
         app:mt_placeholderColor="@color/colorPrimaryDark1"
-        app:mt_hint="Search for a topic"
         app:mt_roundedSearchBarEnabled="true"
         app:mt_searchBarColor="@color/colorPrimaryLight"
         app:mt_searchIconTint="@color/colorPrimaryDark2"
