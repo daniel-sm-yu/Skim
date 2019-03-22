@@ -9,10 +9,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.StringTokenizer;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -32,10 +31,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
-
     public static final String TAG = MainActivity.class.getSimpleName();
     public AllArticles allArticles = new AllArticles();
-    private MaterialSearchBar searchBar;
     public TextView titleTextView;
     public TextView sourceTextView;
     public TextView dateTextView;
@@ -50,15 +47,18 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_back:
                     displayArticle( allArticles.getPreviousArticle() );
+                    Log.e(TAG, String.valueOf( allArticles.currentArticleNum ) );
                     return true;
 
                 case R.id.navigation_read:
+                    // Opens link to article
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(allArticles.getCurrentArticle().getLink()));
                     startActivity(browserIntent);
                     return true;
 
                 case R.id.navigation_next:
                     displayArticle( allArticles.getNextArticle() );
+                    Log.e(TAG, String.valueOf( allArticles.currentArticleNum ) );
                     return true;
             }
             return false;
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = findViewById( R.id.navigation );
         navigation.setOnNavigationItemSelectedListener( mOnNavigationItemSelectedListener );
-        searchBar = findViewById(R.id.searchBar);
+        MaterialSearchBar searchBar = findViewById( R.id.searchBar );
 
         getNews( "" );
 
@@ -95,13 +95,15 @@ public class MainActivity extends AppCompatActivity {
     private void getNews(String topic) {
 
         String apiKEY = BuildConfig.skim_key;
+        String newsURL = "https://newsapi.org/v2/top-headlines?language=en&apiKey=" + apiKEY + "&q=";
 
-        String newsURL = "https://newsapi.org/v2/top-headlines?language=en&apiKey=" + apiKEY + "&q=" + topic;
-
+        StringTokenizer topics = new StringTokenizer(topic);
+        while (topics.hasMoreTokens()) {
+            newsURL += topics.nextToken() + "+";
+        }
+        Log.e(TAG, newsURL );
         OkHttpClient client = new OkHttpClient();
-
         Request request = new Request.Builder().url(newsURL).build();
-
         Call call = client.newCall( request );
 
         call.enqueue( new Callback() {
@@ -143,11 +145,16 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < allArticles.getNumOfArticles(); i++) {
             JSONObject currentArticle = articles.getJSONObject( i );
+
+            String imageURL = currentArticle.getString( "urlToImage" );
+            if (currentArticle.getString( "urlToImage" ).isEmpty()) {
+                imageURL = null;
+            }
             Article article = new Article(
                 currentArticle.getString( "title" ),
                 currentArticle.getJSONObject( "source" ).getString( "name" ),
                 currentArticle.getString( "publishedAt" ),
-                currentArticle.getString( "urlToImage" ),
+                imageURL,
                 currentArticle.getString( "description" ),
                 currentArticle.getString( "url" )
             );
@@ -170,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 sourceTextView.setText( article.getSource() );
                 dateTextView.setText( article.getDate() );
                 Picasso.with(getApplicationContext()).load(article.getImage()).into(articleImageView);
-                descriptionTextView.setText( article.getDescription());
+                descriptionTextView.setText( article.getDescription() );
             }
         } );
 

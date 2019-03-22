@@ -1,14 +1,5 @@
 package com.dsyu.skim;
 
-import android.util.Log;
-import android.widget.Toast;
-
-import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
-
 public class Article {
     private String title;
     private String source;
