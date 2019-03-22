@@ -8,8 +8,6 @@ public class Article {
     private String description;
     private String link;
 
-    public static final String TAG = MainActivity.class.getSimpleName();
-
     public Article(String title, String source, String date, String image, String description, String link) {
         this.title = title;
         this.source = source;

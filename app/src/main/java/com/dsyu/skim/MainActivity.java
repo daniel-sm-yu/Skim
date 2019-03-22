@@ -2,6 +2,8 @@ package com.dsyu.skim;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -46,17 +48,23 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_back:
-                    displayArticle( allArticles.getPreviousArticle() );
+                    if (allArticles.isArticlesLoaded() || isNetworkAvailable()) {
+                        displayArticle( allArticles.getPreviousArticle() );
+                    }
                     return true;
 
                 case R.id.navigation_read:
-                    // Opens link to article
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(allArticles.getCurrentArticle().getLink()));
-                    startActivity(browserIntent);
+                    if (isNetworkAvailable()) {
+                        // Opens link to article
+                        Intent browserIntent = new Intent( Intent.ACTION_VIEW, Uri.parse( allArticles.getCurrentArticle().getLink() ) );
+                        startActivity( browserIntent );
+                    }
                     return true;
 
                 case R.id.navigation_next:
-                    displayArticle( allArticles.getNextArticle() );
+                    if (allArticles.isArticlesLoaded() || isNetworkAvailable()) {
+                        displayArticle( allArticles.getNextArticle() );
+                    }
                     return true;
             }
             return false;
@@ -91,40 +99,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getNews(String topic) {
+        if (isNetworkAvailable()) {
+            String apiKEY = BuildConfig.skim_key;
+            String newsURL = "https://newsapi.org/v2/everything?language=en&apiKey=" + apiKEY + "&q=";
 
-        String apiKEY = BuildConfig.skim_key;
-        String newsURL = "https://newsapi.org/v2/everything?language=en&apiKey=" + apiKEY + "&q=";
-
-        StringTokenizer topics = new StringTokenizer(topic);
-        while (topics.hasMoreTokens()) {
-            newsURL += topics.nextToken() + "+";
-        }
-
-        Log.e(TAG, newsURL );
-
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(newsURL).build();
-        Call call = client.newCall( request );
-
-        call.enqueue( new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) { }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                try {
-                    String jsonData = response.body().string();
-                    if (response.isSuccessful()) {
-                        setAllArticles(jsonData);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            StringTokenizer topics = new StringTokenizer( topic );
+            while (topics.hasMoreTokens()) {
+                newsURL += topics.nextToken() + "+";
             }
-        } );
+
+            Log.e( TAG, newsURL );
+
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder().url( newsURL ).build();
+            Call call = client.newCall( request );
+
+            call.enqueue( new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    try {
+                        String jsonData = response.body().string();
+                        if (response.isSuccessful()) {
+                            setAllArticles( jsonData );
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } );
+        }
     }
 
     private void setAllArticles(String jsonData) throws JSONException {
+        allArticles.setArticlesLoaded( true );
         JSONObject jsonResponse = new JSONObject( jsonData );
         JSONArray articles = jsonResponse.getJSONArray( "articles" );
         int numOfResponses = jsonResponse.getInt( "totalResults" );
@@ -183,6 +194,20 @@ public class MainActivity extends AppCompatActivity {
         else {
             return value;
         }
+    }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager manager = (ConnectivityManager) getSystemService( Context.CONNECTIVITY_SERVICE );
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+
+        boolean isAvailable = false;
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            isAvailable = true;
+        }
+        else {
+            Toast.makeText( this, "Sorry, the network is unavailable.", Toast.LENGTH_SHORT).show();
+        }
+        return isAvailable;
     }
 }
