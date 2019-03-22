@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground"
         android:backgroundTint="@color/colorPrimaryLight"
-        android:clickable="false"
         app:itemIconTint="@color/colorPrimaryDark2"
         app:itemTextColor="@color/colorPrimaryDark2"
         app:labelVisibilityMode="unlabeled"

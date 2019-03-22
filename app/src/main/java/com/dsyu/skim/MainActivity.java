@@ -1,5 +1,6 @@
 package com.dsyu.skim;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -71,17 +74,21 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener( mOnNavigationItemSelectedListener );
         searchBar = findViewById(R.id.searchBar);
 
+        getNews( "" );
+
         searchBar.setOnSearchActionListener( new MaterialSearchBar.OnSearchActionListener() {
             @Override
             public void onSearchStateChanged(boolean enabled) { }
+            @Override
+            public void onButtonClicked(int buttonCode) { }
 
             @Override
             public void onSearchConfirmed(CharSequence text) {
                 getNews( String.valueOf( text ) );
+                // Hides keyboard
+                InputMethodManager imm = (InputMethodManager)getSystemService( Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
             }
-
-            @Override
-            public void onButtonClicked(int buttonCode) { }
         } );
     }
 
@@ -99,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
         call.enqueue( new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {}
+            public void onFailure(Call call, IOException e) { }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
