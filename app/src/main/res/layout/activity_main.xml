@@ -28,7 +28,6 @@
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="16dp"
-        android:requiresFadingEdge="vertical"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -103,8 +102,7 @@
                 android:textColor="@color/colorPrimaryDark2"
                 android:textSize="19sp"
                 tools:layout_editor_absoluteX="137dp"
-                tools:layout_editor_absoluteY="447dp"
-                tools:targetApi="o" />
+                tools:layout_editor_absoluteY="447dp" />
 
         </LinearLayout>
     </ScrollView>
@@ -115,9 +113,8 @@
         style="@style/MaterialSearchBarLight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:padding="16dp"
+        android:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -125,9 +122,9 @@
         app:mt_clearIconTint="@color/colorPrimaryDark2"
         app:mt_hint="Search for a topic"
         app:mt_maxSuggestionsCount="0"
-        app:mt_placeholder="\tSearch"
+        app:mt_placeholder="Search"
         app:mt_placeholderColor="@color/colorPrimaryDark1"
-        app:mt_roundedSearchBarEnabled="true"
+        app:mt_roundedSearchBarEnabled="false"
         app:mt_searchBarColor="@color/colorPrimaryLight"
         app:mt_searchIconTint="@color/colorPrimaryDark2"
         app:mt_speechMode="false"
