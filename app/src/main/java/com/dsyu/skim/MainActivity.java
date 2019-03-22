@@ -145,12 +145,12 @@ public class MainActivity extends AppCompatActivity {
             JSONObject currentArticle = articles.getJSONObject( i );
 
             Article article = new Article(
-                currentArticle.getString( "title" ),
-                currentArticle.getJSONObject( "source" ).getString( "name" ),
-                currentArticle.getString( "publishedAt" ),
-                currentArticle.getString( "urlToImage" ),
-                currentArticle.getString( "description" ),
-                currentArticle.getString( "url" )
+                emptyCheck( currentArticle.getString( "title" ) ),
+                emptyCheck( currentArticle.getJSONObject( "source" ).getString( "name" ) ),
+                emptyCheck( currentArticle.getString( "publishedAt" ) ),
+                emptyCheck( currentArticle.getString( "urlToImage" ) ),
+                emptyCheck( currentArticle.getString( "description" ) ),
+                emptyCheck( currentArticle.getString( "url" ) )
             );
             allArticles.setArticleAtIndex( i, article );
         }
@@ -174,7 +174,15 @@ public class MainActivity extends AppCompatActivity {
                 descriptionTextView.setText( article.getDescription() );
             }
         } );
-
     }
 
+    private String emptyCheck(String value) {
+        if (value.isEmpty()) {
+            return null;
+        }
+        else {
+            return value;
+        }
+
+    }
 }
