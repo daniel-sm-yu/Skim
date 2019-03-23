@@ -1,5 +1,7 @@
 package com.dsyu.skim;
 
+import android.widget.Toast;
+
 public class AllArticles {
 
     private boolean articlesLoaded = false;
@@ -17,9 +19,7 @@ public class AllArticles {
         allArticles[i] = article;
     }
 
-    public boolean isArticlesLoaded() {
-        return articlesLoaded;
-    }
+    public boolean isArticlesLoaded() { return articlesLoaded; }
 
     public void setArticlesLoaded(boolean articlesLoaded) {
         this.articlesLoaded = articlesLoaded;

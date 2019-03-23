@@ -49,13 +49,13 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_back:
-                    if (allArticles.isArticlesLoaded() || isNetworkAvailable()) {
+                    if (isArticleLoaded()) {
                         displayArticle( allArticles.getPreviousArticle() );
                     }
                     return true;
 
                 case R.id.navigation_read:
-                    if (isNetworkAvailable()) {
+                    if (isNetworkAvailable() && isArticleLoaded()) {
                         // Opens link to article
                         Intent browserIntent = new Intent( Intent.ACTION_VIEW, Uri.parse( allArticles.getCurrentArticle().getLink() ) );
                         startActivity( browserIntent );
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.navigation_next:
-                    if (allArticles.isArticlesLoaded() || isNetworkAvailable()) {
+                    if (isArticleLoaded()) {
                         displayArticle( allArticles.getNextArticle() );
                     }
                     return true;
@@ -212,5 +212,17 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText( this, "Sorry, the network is unavailable.", Toast.LENGTH_SHORT).show();
         }
         return isAvailable;
+    }
+
+    private boolean isArticleLoaded() {
+        if (!allArticles.isArticlesLoaded() && isNetworkAvailable()) {
+            runOnUiThread( new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText( MainActivity.this, "Search for articles using the search bar.", Toast.LENGTH_SHORT ).show();
+                }
+            } );
+        }
+        return allArticles.isArticlesLoaded();
     }
 }
