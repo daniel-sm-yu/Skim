@@ -82,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
         MaterialSearchBar searchBar = findViewById( R.id.searchBar );
 
         Random random = new Random();
-        getNews( String.valueOf(random.nextInt(26) + 'a') );
+        char letter = (char) (random.nextInt(26) + 'a');
+        getNews( String.valueOf( letter ) );
 
         searchBar.setOnSearchActionListener( new MaterialSearchBar.OnSearchActionListener() {
             @Override
@@ -103,14 +104,14 @@ public class MainActivity extends AppCompatActivity {
     private void getNews(String topic) {
         if (isNetworkAvailable()) {
             String apiKEY = BuildConfig.skim_key;
-            String newsURL = "https://newsapi.org/v2/everything?language=en&apiKey=" + apiKEY + "&q=";
+            String newsURL = "https://newsapi.org/v2/everything?language=en&sortBy=relevancy&apiKey=" + apiKEY + "&q=";
 
             StringTokenizer topics = new StringTokenizer( topic );
             while (topics.hasMoreTokens()) {
                 newsURL += topics.nextToken() + "+";
             }
 
-            Log.e( TAG, newsURL );
+            Log.v( TAG, newsURL );
 
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder().url( newsURL ).build();
